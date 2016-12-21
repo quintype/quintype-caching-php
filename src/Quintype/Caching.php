@@ -30,7 +30,6 @@ class Caching
 
     public function buildCacheHeaders($cacheParams)
     {
-      print_r($cacheParams);
         $browserTTLs = $cacheParams['browserTTLs'];
         $cdnTTLs = $cacheParams['cdnTTLs'];
 
