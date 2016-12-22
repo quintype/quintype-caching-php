@@ -34,8 +34,8 @@ class Caching
         $cdnTTLs = $cacheParams['cdnTTLs'];
 
         $commonHeaders = [
-          'Cache-Control' => 'public,max-age='.$browserTTLs['max-age'],
-          'Surrogate-Control' => 'public,max-age='.$cdnTTLs['max-age'].',stale-while-revalidate='.$cdnTTLs['stale-while-revalidate'].',stale-if-error='.$cdnTTLs['stale-if-error'],
+          'Cache-Control' => 'public, max-age='.$browserTTLs['max-age'],
+          'Surrogate-Control' => 'public, max-age='.$cdnTTLs['max-age'].', stale-while-revalidate='.$cdnTTLs['stale-while-revalidate'].', stale-if-error='.$cdnTTLs['stale-if-error'],
           'Vary' => 'Accept-Encoding',
         ];
 
