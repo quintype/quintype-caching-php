@@ -30,6 +30,10 @@ class Caching
 
     public function buildCacheHeaders($cacheParams)
     {
+        if(sizeof($cacheParams) < 1){
+          return ['Cache-Control' => 'private, no-cache'];
+        }
+
         $browserTTLs = $cacheParams['browserTTLs'];
         $cdnTTLs = $cacheParams['cdnTTLs'];
 
