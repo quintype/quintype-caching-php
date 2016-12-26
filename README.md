@@ -62,6 +62,21 @@ The argument is an associative array with following keys:
 5. **storyGroup**_(not required for story page)_: top or stack-id
 6. **storiesToCache**: Array of all the stories that have to be cached.
 
+#####Defaults/example:
+```php
+$this->defaultCacheParams = [
+    'publisherId' => $this->config['publisher-id'],
+    'cdnTTLs' => [
+      'max-age' => 3 * 60,
+      'stale-while-revalidate' => 5 * 60,
+      'stale-if-error' => 4 * 60 * 60,
+    ],
+    'browserTTLs' => [
+      'max-age' => 60,
+    ],
+];
+```
+
 ```php
 return response(view("home_page", $this->toView([])))
         ->withHeaders($this->caching->buildCacheHeaders(array_merge($this->defaultCacheParams, ["locationId" => "home", "storyGroup" => "top", "storiesToCache" => $storiesToCache])));
