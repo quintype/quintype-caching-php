@@ -77,4 +77,11 @@ The argument is an associative array with following keys:
 ```php
 return response(view("home_page", $this->toView([])))
         ->withHeaders($this->caching->buildCacheHeaders(array_merge($this->defaultCacheParams, ["locationId" => "home", "storyGroup" => "top", "storiesToCache" => $storiesToCache])));
+
+return response(view("section_page", $this->toView([])))
+        ->withHeaders($this->caching->buildCacheHeaders(array_merge($this->defaultCacheParams, ["locationId" => $params["section-id"], "storyGroup" => $params["story-group"], "storiesToCache" => $storiesToCache])));
+
+return response(view("story_page", $this->toView([])))
+        ->withHeaders($this->caching->buildCacheHeaders(array_merge($this->defaultCacheParams, ["storiesToCache" => $storiesToCache])));
+
 ```
