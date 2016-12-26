@@ -40,10 +40,21 @@ $ composer update
 use Caching;
 ```
 
-####  Create a constructor function to initialize the Caching object.
+####  Create a constructor function to initialize the Caching object and to set default caching parameters..
 ```php
 public function __construct(){
   $this->caching = new Caching();
+  $this->defaultCacheParams = [
+      'publisherId' => <publisher_id>,
+      'cdnTTLs' => [
+        'max-age' => 3 * 60,
+        'stale-while-revalidate' => 5 * 60,
+        'stale-if-error' => 4 * 60 * 60,
+      ],
+      'browserTTLs' => [
+        'max-age' => 60,
+      ],
+  ];
 }
 ```
 
@@ -62,20 +73,6 @@ The argument is an associative array with following keys:
 5. **storyGroup**_(not required for story page)_: top or stack-id
 6. **storiesToCache**: Array of all the stories that have to be cached.
 
-#####Defaults/example:
-```php
-$this->defaultCacheParams = [
-    'publisherId' => $this->config['publisher-id'],
-    'cdnTTLs' => [
-      'max-age' => 3 * 60,
-      'stale-while-revalidate' => 5 * 60,
-      'stale-if-error' => 4 * 60 * 60,
-    ],
-    'browserTTLs' => [
-      'max-age' => 60,
-    ],
-];
-```
 
 ```php
 return response(view("home_page", $this->toView([])))
