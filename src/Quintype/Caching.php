@@ -24,7 +24,7 @@ class Caching
           }
         }
         $params['storiesToCache'] = $stories;
-        $this->buildStoryKeys($params);
+        return $this->buildStoryKeys($params);
     }
 
     private function buildSurrogateKey($cacheParams)
