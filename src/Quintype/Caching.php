@@ -10,8 +10,21 @@ class Caching
         foreach ($params['storiesToCache'] as $story) {
             array_push($storyKeys, 'ss/'.$params['publisherId'].'/'.substr(trim($story['id']), 0, 8));
         }
-
         return implode(' ', $storyKeys);
+    }
+
+    private function buildStoryKeysFromCollections($params)
+    {
+        $stories = [];
+        foreach ($params['storiesToCache'] as $key => $collection) {
+          foreach ($collection['items'] as $key => $item) {
+            if ($item['type'] === 'story') {
+              array_push($stories, $item['story']);
+            }
+          }
+        }
+        $params['storiesToCache'] = $stories;
+        $this->buildStoryKeys($params);
     }
 
     private function buildSurrogateKey($cacheParams)
@@ -22,7 +35,11 @@ class Caching
         }
 
         if (isset($cacheParams['storiesToCache'])) {
+          if (isset($cacheParams['storiesFrom']) && $cacheParams['storiesFrom'] === "collection"){
+            $surrogateKey = $surrogateKey.' '.$this->buildStoryKeysFromCollections($cacheParams);
+          } else {
             $surrogateKey = $surrogateKey.' '.$this->buildStoryKeys($cacheParams);
+          }
         }
 
         return ['Surrogate-Key' => $surrogateKey];

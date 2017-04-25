@@ -71,7 +71,10 @@ The argument is an associative array with following keys:
   1. **max-age**
 4. **locationId**_(not required for story page)_: home or section-id
 5. **storyGroup**_(not required for story page)_: top or stack-id
-6. **storiesToCache**: Array of all the stories that have to be cached.
+6. **storiesToCache**:
+  1. Array of all collections under a key for each of them, if driven through collections.
+  2. Array of all the stories that have to be cached, if driven through stories.
+7. **storiesFrom**_(required for collection driven page)_: collection
 
 
 ```php
@@ -83,5 +86,8 @@ return response(view("section_page", $this->toView([])))
 
 return response(view("story_page", $this->toView([])))
         ->withHeaders($this->caching->buildCacheHeaders(array_merge($this->defaultCacheParams, ["storiesToCache" => $storiesToCache])));
+
+return response(view("collection_page", $this->toView([])))
+        ->withHeaders($this->caching->buildCacheHeaders(array_merge($this->defaultCacheParams, ["locationId" => "<depends_on_the_page>", "storiesFrom"=> "collection", "storiesToCache" => $storiesToCache])));
 
 ```
