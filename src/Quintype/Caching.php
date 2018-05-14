@@ -17,7 +17,9 @@ class Caching
     {
         $collectionKeys = [];
         foreach ($params['storiesToCache'] as $key =>  $collection) {
+          if (isset($collection['items']) && isset($collection['id'])) {
             array_push($collectionKeys, 'c/'.$params['publisherId'].'/'. trim($collection['id']));
+          }
         }
         return implode(' ', $collectionKeys);
     }
@@ -26,9 +28,11 @@ class Caching
     {
         $stories = [];
         foreach ($params['storiesToCache'] as $key => $collection) {
-          foreach (array_slice($collection['items'], 0, 5) as $key => $item) {
-            if ($item['type'] === 'story') {
-              array_push($stories, $item['story']);
+          if (isset($collection['items']) && sizeof($collection['items']) > 5 ) {
+            foreach (array_slice($collection['items'], 0, 5) as $key => $item) {
+              if ($item['type'] === 'story') {
+                array_push($stories, $item['story']);
+              }
             }
           }
         }
