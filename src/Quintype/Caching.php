@@ -55,7 +55,10 @@ class Caching
           }
         }
 
-        return ['Surrogate-Key' => $surrogateKey];
+        return [
+            'Cache-Tag' => str_replace(" ", ",", $surrogateKey),
+            'Surrogate-Key' => $surrogateKey
+        ];
     }
 
     public function buildCacheHeaders($cacheParams)
@@ -68,7 +71,7 @@ class Caching
         $cdnTTLs = $cacheParams['cdnTTLs'];
 
         $commonHeaders = [
-          'Cache-Control' => 'public, max-age='.$browserTTLs['max-age'],
+          'Cache-Control' => 'public,max-age='.$browserTTLs['max-age'].'s-maxage='.$cdnTTLs['max-age'].',stale-while-revalidate='.$cdnTTLs['stale-while-revalidate'].',stale-if-error='.$cdnTTLs['stale-if-error'],
           'Surrogate-Control' => 'public, max-age='.$cdnTTLs['max-age'].', stale-while-revalidate='.$cdnTTLs['stale-while-revalidate'].', stale-if-error='.$cdnTTLs['stale-if-error'],
           'Vary' => 'Accept-Encoding',
         ];
